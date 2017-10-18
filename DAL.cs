@@ -414,6 +414,7 @@ namespace CriandoXML
             public string pesotaxado;
             public string quantidadeprocesso;
            
+           
         }
 
 
