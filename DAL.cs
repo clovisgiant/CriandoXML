@@ -13,11 +13,11 @@ namespace CriandoXML
     class DAL
     {
 
-        static string serverName = "localhost";  //localhost
+        static string serverName = "192.168.66.44";  //localhost
         static string port = "5432";             //porta default
         static string userName = "postgres";     //nome do administrador
         static string password = "d19m11";     //senha do administrador
-        static string databaseName = "giant_novo_producao"; //nome do banco de dados    
+        static string databaseName = "agenciamento"; //nome do banco de dados    
 
        
 
@@ -92,7 +92,35 @@ namespace CriandoXML
             return dt;
         }
 
+        public DataTable GetRegistroDEPARA(string descricao)
+        {
 
+            DataTable dt = new DataTable();
+            try
+            {
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connString))
+                {
+                    //Abra a conexão com o PgSQL
+                    pgsqlConnection.Open();
+                    string cmdSeleciona = "Select  ds_codigo,  ds_descricao from tb_depara where ds_descricao Like '%" + descricao + "%'";
+
+                    using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
+                    {
+                        Adpt.Fill(dt);
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
+            return dt;
+        }
         public DataTable Getcounthouses(string master)
         {
 
@@ -123,7 +151,7 @@ namespace CriandoXML
             return dt;
         }
 
-        public DataTable GetMaster_house()
+        public DataTable GetMaster_house(string user)
         {
 
             DataTable dt = new DataTable();
@@ -133,7 +161,7 @@ namespace CriandoXML
                 {
                     //Abra a conexão com o PgSQL
                     pgsqlConnection.Open();
-                    string cmdSeleciona = "SELECT h.nrmaster, h.nrhouse FROM  tb_housepdfs  h GROUP BY h.nrmaster, h.nrhouse ORDER  BY h.nrhouse DESC";
+                    string cmdSeleciona = "SELECT h.nrmaster, h.nrhouse FROM  tb_housepdfs  h where nomeuser = '" + user + "'  GROUP BY h.nrmaster, h.nrhouse ORDER  BY h.nrhouse DESC";
                     using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
                     {
                         Adpt.Fill(dt);
@@ -153,7 +181,7 @@ namespace CriandoXML
         }
 
 
-        public DataTable GetRegistrohouse(string nrmaster)
+        public DataTable GetRegistrohouse(string nrmaster, string user)
         {
 
             DataTable dt = new DataTable();
@@ -163,7 +191,8 @@ namespace CriandoXML
                 {
                     //Abra a conexão com o PgSQL
                     pgsqlConnection.Open();
-                    string cmdSeleciona = "select * From tb_housepdfs where nrmaster = '"+nrmaster+"'";
+                    string cmdSeleciona = "select Distinct nrhouse, nrmaster,cliente,exportador,icoterm,origem,destino,agente,transportador,moedafrete,tipofrete,nrvoo,emissaoconhecimento,prevembarque,embarque,quantidade,pesobruto,pesotaxado,tar_vendamin From tb_housepdfs where nrmaster = '" + nrmaster + "' AND  nomeuser = '" + user + "' ORDER BY nrhouse";
+                    //string cmdSeleciona = "SELECT DISTINCT ON (nrhouse) * FROM tb_housepdfs where nrmaster = '" + nrmaster + "' ORDER BY nrhouse DESC";
                     using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
                     {
                         Adpt.Fill(dt);
@@ -274,7 +303,7 @@ namespace CriandoXML
             return dt;
         }
 
-        public DataTable GetRegistroHouses(string master)
+        public DataTable GetRegistroHouses(string master, string user)
         {
 
             DataTable dt = new DataTable();
@@ -284,9 +313,11 @@ namespace CriandoXML
                 {
                     //Abra a conexão com o PgSQL
                     pgsqlConnection.Open();
-                    string cmdSeleciona = "select Distinct nrmaster,cliente,exportador,icoterm,origem,destino,agente,transportador,moedafrete,tipofrete,nrvoo,emissaoconhecimento,prevembarque,embarque,quantidade,pesobruto,pesotaxado, * from tb_housepdfs where nrmaster = '" + master + "'";
-                   // string cmdSeleciona = "select cd_agente,ds_razao_social, ds_nome_fantasia from tb_agente order by ds_nome_fantasia";
+                    string cmdSeleciona = "select Distinct nrhouse, nrmaster,cliente,exportador,icoterm,origem,destino,agente,transportador,moedafrete,tipofrete,nrvoo,emissaoconhecimento,prevembarque,embarque,quantidade,pesobruto,pesotaxado,tar_vendamin from tb_housepdfs where   nomeuser = '" + user + "' AND nrmaster = '" + master + "'";
+                    //string cmdSeleciona = "select Distinct * from tb_housepdfs where nrmaster = '" + master + "' order by nrhouse";
 
+                   // string cmdSeleciona = "SELECT DISTINCT ON (nrhouse) * FROM tb_housepdfs where nrmaster = '" + master + "' ORDER BY nrhouse DESC";
+                  
                     using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
                     {
                         Adpt.Fill(dt);
@@ -303,6 +334,72 @@ namespace CriandoXML
             }
 
             return dt;
+        }
+
+        public DataTable GetRegistroAlertas(string master)
+        {
+
+            DataTable dt = new DataTable();
+            try
+            {
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connString))
+                {
+                    //Abra a conexão com o PgSQL
+                    pgsqlConnection.Open();
+                    string cmdSeleciona = "Select Distinct descricao from tb_alertasmaster where corrigiu <> 1 AND nrmaster = '" + master + "'";
+                    // string cmdSeleciona = "select cd_agente,ds_razao_social, ds_nome_fantasia from tb_agente order by ds_nome_fantasia";
+
+                    using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
+                    {
+                        Adpt.Fill(dt);
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+           
+                return dt;
+          
+        }
+
+        public DataTable GetRegistroAlertastodos()
+        {
+
+            DataTable dt = new DataTable();
+            try
+            {
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connString))
+                {
+                    //Abra a conexão com o PgSQL
+                    pgsqlConnection.Open();
+                    string cmdSeleciona = "Select Distinct descricao from tb_alertasmaster where corrigiu <> 1";
+                    // string cmdSeleciona = "select cd_agente,ds_razao_social, ds_nome_fantasia from tb_agente order by ds_nome_fantasia";
+
+                    using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
+                    {
+                        Adpt.Fill(dt);
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return dt;
+
         }
 
         public void AtualizarMaster(string nrmaster, string textqtdprocesso, string txtorigem, string txtdestino,
@@ -339,9 +436,9 @@ namespace CriandoXML
             //}
         }
 
+        
 
-
-        public void AtualizarHouse(string nrhouse, string cliente, string exportador, string icoterm, string origem, string destino, string agente,  string moedafrete, string tipofrete)
+        public void AtualizarAlertaMaster(string nrmaster, string origem, string destino, string agente,  string moedafrete, string tipofrete)
         {
             try
             {
@@ -350,8 +447,8 @@ namespace CriandoXML
                     //Abra a conexão com o PgSQL                  
                     pgsqlConnectionhouse.Open();
 
-                    string cmdAtualiza = String.Format("Update tb_housepdfs Set cliente = '" + cliente + "' , exportador = '" + exportador + "' , icoterm = '" + icoterm + "' , origem = '" + origem + "' , destino = '" + destino + "' , agente = '" + agente +  "' , moedafrete = '" + moedafrete + "' , tipofrete = '" + tipofrete  + "' Where nrhouse = '"+ nrhouse + "'" );
-
+                    string cmdAtualiza = String.Format("Update tb_alertasmaster Set corrigiu = " + 1 + " , descricao ='Processo  ok  para ser enviados para Bysoft'  , origem = '" + origem + "' , destino = '" + destino + "' , agente = '" + agente + "' , moedafrete = '" + moedafrete + "' , tipofrete = '" + tipofrete + "' Where nrmaster = '" + nrmaster + "'");
+                    
                     using (NpgsqlCommand pgsqlcommand = new NpgsqlCommand(cmdAtualiza, pgsqlConnectionhouse))
                     {
                         pgsqlcommand.ExecuteNonQuery();
@@ -369,6 +466,145 @@ namespace CriandoXML
             
         }
 
+        public void AtualizarHouse(string nrhouse, string cliente, string exportador, string icoterm, string origem, string destino, string agente, string moedafrete, string tipofrete)
+        {
+            try
+            {
+                using (NpgsqlConnection pgsqlConnectionhouse = new NpgsqlConnection(connString))
+                {
+                    //Abra a conexão com o PgSQL                  
+                    pgsqlConnectionhouse.Open();
+
+                    string cmdAtualiza = String.Format("Update tb_housepdfs Set cliente = '" + cliente + "' , exportador = '" + exportador + "' , icoterm = '" + icoterm + "' , origem = '" + origem + "' , destino = '" + destino + "' , agente = '" + agente + "' , moedafrete = '" + moedafrete + "' , tipofrete = '" + tipofrete + "' Where nrhouse = '" + nrhouse + "'");
+
+                    using (NpgsqlCommand pgsqlcommand = new NpgsqlCommand(cmdAtualiza, pgsqlConnectionhouse))
+                    {
+                        pgsqlcommand.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        //Inserir registros
+        public void InserirAlertaMaster(string descricao, string nrmaster)
+        {
+
+
+            using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connString))
+            {
+                //Abra a conexão com o PgSQL                  
+                pgsqlConnection.Open();
+
+                string cmdInserir = String.Format("Insert Into tb_alertasmaster(descricao,nrmaster) values('{0}','{1}')", descricao, nrmaster);
+
+                using (NpgsqlCommand pgsqlcommand = new NpgsqlCommand(cmdInserir, pgsqlConnection))
+                {
+                    pgsqlcommand.ExecuteNonQuery();
+                }
+            }
+
+        }
+
+
+
+        public DataTable GetDestinomaster(string nrmaster, string user)
+        {
+
+            DataTable dt = new DataTable();
+            try
+            {
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connString))
+                {
+                    //Abra a conexão com o PgSQL
+                    pgsqlConnection.Open();
+                    string cmdSeleciona = "select Distinct origem from  tb_housepdfs where nomeuser = '" + user + "' AND nrmaster =  '" + nrmaster + "'";
+
+                    using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
+                    {
+                        Adpt.Fill(dt);
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return dt;
+        }
+
+        //Deleta registros
+        public void DeletaHouse(string nrmaster, string user)
+        {
+
+
+            using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connString))
+            {
+                //Abra a conexão com o PgSQL                  
+                pgsqlConnection.Open();
+
+                string cmdInserir = String.Format("Delete  From tb_housepdfs where nomeuser = '" + user + "' AND  nrmaster =  '" + nrmaster + "'");
+
+                using (NpgsqlCommand pgsqlcommand = new NpgsqlCommand(cmdInserir, pgsqlConnection))
+                {
+                    pgsqlcommand.ExecuteNonQuery();
+                }
+            }
+
+        }
+
+        //Deleta registros
+        public void DeletaMaster(string nrmaster, string user)
+        {
+
+
+            using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connString))
+            {
+                //Abra a conexão com o PgSQL                  
+                pgsqlConnection.Open();
+
+                string cmdInserir = String.Format("Delete  From tb_pdfmaster where nomeuser = '" + user + "' AND  nrmaster =  '" + nrmaster + "'");
+
+                using (NpgsqlCommand pgsqlcommand = new NpgsqlCommand(cmdInserir, pgsqlConnection))
+                {
+                    pgsqlcommand.ExecuteNonQuery();
+                }
+            }
+
+        }
+
+        //Deleta registros
+        public void DeletaArquivosMaster(string user)
+        {
+
+
+            using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connString))
+            {
+                //Abra a conexão com o PgSQL                  
+                pgsqlConnection.Open();
+
+                string cmdInserir = String.Format("Delete  From tb_arquivospdfs WHERE nomeuser = '" + user + "'");
+
+                using (NpgsqlCommand pgsqlcommand = new NpgsqlCommand(cmdInserir, pgsqlConnection))
+                {
+                    pgsqlcommand.ExecuteNonQuery();
+                }
+            }
+
+        }
 
 
         public class Master

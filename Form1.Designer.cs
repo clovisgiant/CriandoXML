@@ -36,6 +36,8 @@
             this.btnLerXML = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbPatient = new System.Windows.Forms.TabPage();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txttotalmaster = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label17 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -105,6 +107,7 @@
             this.textcliente = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvXML)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tbPatient.SuspendLayout();
@@ -123,7 +126,7 @@
             // 
             // btnCriarXML
             // 
-            this.btnCriarXML.Location = new System.Drawing.Point(588, 394);
+            this.btnCriarXML.Location = new System.Drawing.Point(880, 479);
             this.btnCriarXML.Margin = new System.Windows.Forms.Padding(2);
             this.btnCriarXML.Name = "btnCriarXML";
             this.btnCriarXML.Size = new System.Drawing.Size(88, 40);
@@ -134,13 +137,14 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(179, 397);
+            this.btnSair.Location = new System.Drawing.Point(484, 481);
             this.btnSair.Margin = new System.Windows.Forms.Padding(2);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(97, 38);
+            this.btnSair.Size = new System.Drawing.Size(165, 38);
             this.btnSair.TabIndex = 2;
-            this.btnSair.Text = "Sair";
+            this.btnSair.Text = "Enviar Processos para Bysoft";
             this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
             // dgvXML
             // 
@@ -149,13 +153,13 @@
             this.dgvXML.Margin = new System.Windows.Forms.Padding(2);
             this.dgvXML.Name = "dgvXML";
             this.dgvXML.RowTemplate.Height = 24;
-            this.dgvXML.Size = new System.Drawing.Size(355, 371);
+            this.dgvXML.Size = new System.Drawing.Size(633, 454);
             this.dgvXML.TabIndex = 3;
             this.dgvXML.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvXML_CellClick);
             // 
             // btnCriarXML2
             // 
-            this.btnCriarXML2.Location = new System.Drawing.Point(16, 396);
+            this.btnCriarXML2.Location = new System.Drawing.Point(16, 487);
             this.btnCriarXML2.Margin = new System.Windows.Forms.Padding(2);
             this.btnCriarXML2.Name = "btnCriarXML2";
             this.btnCriarXML2.Size = new System.Drawing.Size(76, 39);
@@ -166,7 +170,7 @@
             // 
             // btnLerXML
             // 
-            this.btnLerXML.Location = new System.Drawing.Point(99, 397);
+            this.btnLerXML.Location = new System.Drawing.Point(99, 488);
             this.btnLerXML.Margin = new System.Windows.Forms.Padding(2);
             this.btnLerXML.Name = "btnLerXML";
             this.btnLerXML.Size = new System.Drawing.Size(71, 38);
@@ -179,16 +183,18 @@
             // 
             this.tabControl1.Controls.Add(this.tbPatient);
             this.tabControl1.Controls.Add(this.tbOperation);
-            this.tabControl1.Location = new System.Drawing.Point(380, 13);
+            this.tabControl1.Location = new System.Drawing.Point(667, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(504, 378);
+            this.tabControl1.Size = new System.Drawing.Size(504, 461);
             this.tabControl1.TabIndex = 6;
             this.tabControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabControl1_MouseClick);
             // 
             // tbPatient
             // 
             this.tbPatient.BackColor = System.Drawing.Color.White;
+            this.tbPatient.Controls.Add(this.label20);
+            this.tbPatient.Controls.Add(this.txttotalmaster);
             this.tbPatient.Controls.Add(this.listBox1);
             this.tbPatient.Controls.Add(this.label17);
             this.tbPatient.Controls.Add(this.pictureBox1);
@@ -228,24 +234,43 @@
             this.tbPatient.Location = new System.Drawing.Point(4, 22);
             this.tbPatient.Name = "tbPatient";
             this.tbPatient.Padding = new System.Windows.Forms.Padding(3);
-            this.tbPatient.Size = new System.Drawing.Size(496, 352);
+            this.tbPatient.Size = new System.Drawing.Size(496, 435);
             this.tbPatient.TabIndex = 0;
             this.tbPatient.Text = "Master";
             this.tbPatient.Click += new System.EventHandler(this.btnLerXML_Click);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(325, 185);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(69, 13);
+            this.label20.TabIndex = 152;
+            this.label20.Text = "Tarifa Master";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // txttotalmaster
+            // 
+            this.txttotalmaster.BackColor = System.Drawing.Color.White;
+            this.txttotalmaster.Location = new System.Drawing.Point(396, 181);
+            this.txttotalmaster.MaxLength = 100;
+            this.txttotalmaster.Name = "txttotalmaster";
+            this.txttotalmaster.Size = new System.Drawing.Size(88, 20);
+            this.txttotalmaster.TabIndex = 151;
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(10, 207);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(476, 134);
+            this.listBox1.Size = new System.Drawing.Size(476, 225);
             this.listBox1.TabIndex = 150;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(158, 192);
+            this.label17.Location = new System.Drawing.Point(184, 192);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(120, 13);
             this.label17.TabIndex = 149;
@@ -422,7 +447,7 @@
             this.textvoo.Location = new System.Drawing.Point(385, 95);
             this.textvoo.MaxLength = 100;
             this.textvoo.Name = "textvoo";
-            this.textvoo.Size = new System.Drawing.Size(105, 20);
+            this.textvoo.Size = new System.Drawing.Size(101, 20);
             this.textvoo.TabIndex = 131;
             // 
             // label8
@@ -607,7 +632,7 @@
             this.tbOperation.Location = new System.Drawing.Point(4, 22);
             this.tbOperation.Name = "tbOperation";
             this.tbOperation.Padding = new System.Windows.Forms.Padding(3);
-            this.tbOperation.Size = new System.Drawing.Size(496, 352);
+            this.tbOperation.Size = new System.Drawing.Size(496, 435);
             this.tbOperation.TabIndex = 1;
             this.tbOperation.Text = "Houses";
             // 
@@ -697,7 +722,7 @@
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(469, 179);
+            this.dataGridView1.Size = new System.Drawing.Size(477, 264);
             this.dataGridView1.TabIndex = 183;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -911,18 +936,28 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(151, 5);
+            this.label15.Location = new System.Drawing.Point(283, 5);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(44, 13);
             this.label15.TabIndex = 7;
             this.label15.Text = "Masters";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(1070, 5);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(41, 13);
+            this.label22.TabIndex = 8;
+            this.label22.Text = "label22";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(894, 441);
+            this.ClientSize = new System.Drawing.Size(1183, 537);
+            this.Controls.Add(this.label22);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnLerXML);
@@ -934,7 +969,8 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Criando XML";
+            this.Text = "user";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvXML)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tbPatient.ResumeLayout(false);
@@ -1034,6 +1070,9 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txttotalmaster;
+        private System.Windows.Forms.Label label22;
     }
 }
 

@@ -62,5 +62,7 @@ namespace CriandoXML
         {
             (dataGridexportador.DataSource as DataTable).DefaultView.RowFilter = string.Format("Nome_Agente LIKE '%{0}%'", tbTexto.Text);
         }
+
+       
     }
 }

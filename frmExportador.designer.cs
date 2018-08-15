@@ -66,7 +66,7 @@
             // 
             // btnFechar
             // 
-            this.btnFechar.Location = new System.Drawing.Point(376, 10);
+            this.btnFechar.Location = new System.Drawing.Point(485, 22);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(72, 23);
             this.btnFechar.TabIndex = 5;
@@ -81,7 +81,7 @@
             this.dataGridexportador.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridexportador.Name = "dataGridexportador";
             this.dataGridexportador.RowTemplate.Height = 24;
-            this.dataGridexportador.Size = new System.Drawing.Size(437, 233);
+            this.dataGridexportador.Size = new System.Drawing.Size(584, 233);
             this.dataGridexportador.TabIndex = 184;
             this.dataGridexportador.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewagente_CellClick);
             // 
@@ -99,7 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(460, 310);
+            this.ClientSize = new System.Drawing.Size(607, 310);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridexportador);
             this.Controls.Add(this.tbTexto);
@@ -108,7 +108,7 @@
             this.Controls.Add(this.lblTexto);
             this.Name = "frmExportador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Exportador";
+            this.Text = "Exportador";           
             ((System.ComponentModel.ISupportInitialize)(this.dataGridexportador)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

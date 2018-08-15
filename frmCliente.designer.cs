@@ -66,7 +66,7 @@
             // 
             // btnFechar
             // 
-            this.btnFechar.Location = new System.Drawing.Point(406, 13);
+            this.btnFechar.Location = new System.Drawing.Point(513, 25);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(72, 23);
             this.btnFechar.TabIndex = 5;
@@ -81,7 +81,7 @@
             this.dataGridViewCliente.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewCliente.Name = "dataGridViewCliente";
             this.dataGridViewCliente.RowTemplate.Height = 24;
-            this.dataGridViewCliente.Size = new System.Drawing.Size(467, 228);
+            this.dataGridViewCliente.Size = new System.Drawing.Size(601, 228);
             this.dataGridViewCliente.TabIndex = 184;
             this.dataGridViewCliente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewagente_CellClick);
             // 
@@ -99,7 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(490, 310);
+            this.ClientSize = new System.Drawing.Size(624, 310);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridViewCliente);
             this.Controls.Add(this.tbTexto);
@@ -109,6 +109,7 @@
             this.Name = "frmCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cliente";
+            this.Load += new System.EventHandler(this.frmCliente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCliente)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

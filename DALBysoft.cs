@@ -19,22 +19,40 @@ namespace CriandoXML
         /// conexão bysoft
         /// </summary>
 
-        static string serverNamebysoft = "189.91.32.81";  //localhost
+        static string serverNamebysoft = "bysoft.giantcargo.com.br";  //localhost
         static string portbysoft = "5432";             //porta default
         static string userNamebysoft = "postgres";     //nome do administrador
         static string passwordbysoft = "masterkey";     //senha do administrador
         static string databaseNamebysoft = "iglobal"; //nome do banco de dados
 
+
+        static string serverNamelocal = "192.168.66.44";  //localhost
+        static string portlocal = "5432";             //porta default
+        static string userNamelocal = "postgres";     //nome do administrador
+        static string passwordlocal = "d19m11";     //senha do administrador
+        static string databaseNamelocal = "agenciamento"; //nome do banco de dados
+
        
 
         NpgsqlConnection pgsqlConnection = null;
         string connStringBysoft = null;
+        string connStringlocal = null;
 
         public DALBysoft()
         {
             connStringBysoft = String.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};",
                                           serverNamebysoft, portbysoft, userNamebysoft, passwordbysoft, databaseNamebysoft);
+
+            connStringlocal = String.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};",
+                                          serverNamelocal, portlocal, userNamelocal, passwordlocal, databaseNamelocal);
+
         }
+
+        //public DALlocal()
+        //{
+        //    connStringlocal = String.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};",
+        //                                  serverNamelocal, portlocal, userNamelocal, passwordlocal, databaseNamelocal);
+        //}
 
 
         public DataTable GetRegistromasterBysoft()
@@ -43,11 +61,11 @@ namespace CriandoXML
             DataTable dt = new DataTable();
             try
             {
-                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connStringBysoft))
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connStringlocal))
                 {
                     //Abra a conexão com o PgSQL
                     pgsqlConnection.Open();
-                    string cmdSeleciona = "select cdpessoa As Codigo_Agente,appessoa As Nome_Agente from pessoa where indagenteinternacional = 'S' AND appessoa IS NOT NULL  ORDER by appessoa ";
+                    string cmdSeleciona = "select cdpessoa As Codigo_Agente,appessoa As Nome_Agente from agentes where   appessoa IS NOT NULL  ORDER by appessoa ";
 
                     using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
                     {
@@ -79,7 +97,7 @@ namespace CriandoXML
                 {
                     //Abra a conexão com o PgSQL
                     pgsqlConnection.Open();
-                    string cmdSeleciona = "select cdpessoa As Codigo_Agente,appessoa As Nome_Agente from pessoa where indcompanhiaaerea = 'S' AND appessoa IS NOT NULL  ORDER by appessoa ";
+                    string cmdSeleciona = "select cdpessoa As Codigo_Agente,appessoa As Nome_Agente from pessoa where indcompanhiaaerea = 'S' AND cdAtivo= 'S' AND appessoa IS NOT NULL  ORDER by appessoa ";
 
                     using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
                     {
@@ -106,11 +124,11 @@ namespace CriandoXML
             DataTable dt = new DataTable();
             try
             {
-                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connStringBysoft))
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connStringlocal))
                 {
                     //Abra a conexão com o PgSQL
                     pgsqlConnection.Open();
-                    string cmdSeleciona = "select cdpessoa As Codigo_Agente,appessoa As Nome_Agente  from pessoa where indexportador = 'S' AND appessoa IS NOT NULL ORDER by appessoa";
+                    string cmdSeleciona = "select cdpessoa As Codigo_Agente,appessoa As Nome_Agente, endereco  from exportador where  appessoa IS NOT NULL ORDER by appessoa";
 
                     using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
                     {
@@ -136,11 +154,11 @@ namespace CriandoXML
             DataTable dt = new DataTable();
             try
             {
-                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connStringBysoft))
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connStringlocal))
                 {
                     //Abra a conexão com o PgSQL
                     pgsqlConnection.Open();
-                    string cmdSeleciona = "select cdpessoa As Codigo_Agente,appessoa As Nome_Agente from pessoa where indcliente = 'S'  AND appessoa IS NOT NULL ORDER by appessoa";
+                    string cmdSeleciona = "select cdpessoa As Codigo_Agente,appessoa As Nome_Agente,endereco from cliente where  appessoa IS NOT NULL ORDER by appessoa";
 
                     using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
                     {
@@ -171,6 +189,97 @@ namespace CriandoXML
                     //Abra a conexão com o PgSQL
                     pgsqlConnection.Open();
                     string cmdSeleciona = "select cdterminalcarga As Codigo_destino ,nmterminalcarga as Destino from terminalcarga where  nmterminalcarga IS NOT NULL ORDER by nmterminalcarga";
+
+                    using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
+                    {
+                        Adpt.Fill(dt);
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return dt;
+        }
+
+        public DataTable GetDestinoxml(string nome)
+        {
+
+            DataTable dt = new DataTable();
+            try
+            {
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connStringBysoft))
+                {
+                    //Abra a conexão com o PgSQL
+                    pgsqlConnection.Open();
+                    string cmdSeleciona = "select cdterminalcarga As Codigo_destino  from terminalcarga where  nmterminalcarga like '%" + nome + "%'";
+
+                    using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
+                    {
+                        Adpt.Fill(dt);
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return dt;
+        }
+
+       
+        public DataTable GetClientehouse(string nome)
+        {
+
+            DataTable dt = new DataTable();
+            try
+            {
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connStringBysoft))
+                {
+                    //Abra a conexão com o PgSQL
+                    pgsqlConnection.Open();
+                    string cmdSeleciona = "select cdterminalcarga As Codigo_destino  from terminalcarga where  nmterminalcarga like '%" + nome + "%'";
+
+                    using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
+                    {
+                        Adpt.Fill(dt);
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return dt;
+        }
+
+        public DataTable GetExportadorhouse(string nome)
+        {
+
+            DataTable dt = new DataTable();
+            try
+            {
+                using (NpgsqlConnection pgsqlConnection = new NpgsqlConnection(connStringBysoft))
+                {
+                    //Abra a conexão com o PgSQL
+                    pgsqlConnection.Open();
+                    string cmdSeleciona = "select cdterminalcarga As Codigo_destino  from terminalcarga where  nmterminalcarga like '%" + nome + "%'";
 
                     using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
                     {
@@ -412,7 +521,7 @@ namespace CriandoXML
                 {
                     //Abra a conexão com o PgSQL
                     pgsqlConnection.Open();
-                    string cmdSeleciona = "select Distinct nrmaster,cliente,exportador,icoterm,origem,destino,agente,transportador,moedafrete,tipofrete,nrvoo,emissaoconhecimento,prevembarque,embarque,quantidade,pesobruto,pesotaxado, * from tb_housepdfs where nrmaster = '" + master + "'";
+                    string cmdSeleciona = "select Distinct nrmaster,cliente,exportador,icoterm,origem,destino,agente,transportador,moedafrete,tipofrete,nrvoo,emissaoconhecimento,prevembarque,embarque,quantidade,pesobruto,pesotaxado, nrhouse from tb_housepdfs where nrmaster = '" + master + "'";
                    // string cmdSeleciona = "select cd_agente,ds_razao_social, ds_nome_fantasia from tb_agente order by ds_nome_fantasia";
 
                     using (NpgsqlDataAdapter Adpt = new NpgsqlDataAdapter(cmdSeleciona, pgsqlConnection))
